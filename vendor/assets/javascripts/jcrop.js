@@ -33,10 +33,10 @@
 
   $.Jcrop = function (obj, opt) {
     var options = $.extend({}, $.Jcrop.defaults),
-        docOffset,
-        _ua = navigator.userAgent.toLowerCase(),
-        is_msie = /msie/.test(_ua),
-        ie6mode = /msie [1-6]\./.test(_ua);
+      docOffset,
+      _ua = navigator.userAgent.toLowerCase(),
+      is_msie = /msie/.test(_ua),
+      ie6mode = /msie [1-6]\./.test(_ua);
 
     // Internal Methods {{{
     function px(n) {
@@ -93,33 +93,33 @@
       return function (pos) {
         if (!options.aspectRatio) {
           switch (mode) {
-          case 'e':
-            pos[1] = f.y2;
-            break;
-          case 'w':
-            pos[1] = f.y2;
-            break;
-          case 'n':
-            pos[0] = f.x2;
-            break;
-          case 's':
-            pos[0] = f.x2;
-            break;
+            case 'e':
+              pos[1] = f.y2;
+              break;
+            case 'w':
+              pos[1] = f.y2;
+              break;
+            case 'n':
+              pos[0] = f.x2;
+              break;
+            case 's':
+              pos[0] = f.x2;
+              break;
           }
         } else {
           switch (mode) {
-          case 'e':
-            pos[1] = f.y + 1;
-            break;
-          case 'w':
-            pos[1] = f.y + 1;
-            break;
-          case 'n':
-            pos[0] = f.x + 1;
-            break;
-          case 's':
-            pos[0] = f.x + 1;
-            break;
+            case 'e':
+              pos[1] = f.y + 1;
+              break;
+            case 'w':
+              pos[1] = f.y + 1;
+              break;
+            case 'n':
+              pos[0] = f.x + 1;
+              break;
+            case 's':
+              pos[0] = f.x + 1;
+              break;
           }
         }
         Coords.setCurrent(pos);
@@ -143,22 +143,22 @@
     function oppLockCorner(ord) //{{{
     {
       switch (ord) {
-      case 'n':
-        return 'sw';
-      case 's':
-        return 'nw';
-      case 'e':
-        return 'nw';
-      case 'w':
-        return 'ne';
-      case 'ne':
-        return 'sw';
-      case 'nw':
-        return 'se';
-      case 'se':
-        return 'nw';
-      case 'sw':
-        return 'ne';
+        case 'n':
+          return 'sw';
+        case 's':
+          return 'nw';
+        case 'e':
+          return 'nw';
+        case 'w':
+          return 'ne';
+        case 'ne':
+          return 'sw';
+        case 'nw':
+          return 'se';
+        case 'se':
+          return 'nw';
+        case 'sw':
+          return 'ne';
       }
     }
     //}}}
@@ -186,30 +186,34 @@
     //}}}
     function presize($obj, w, h) //{{{
     {
-      var nw = $obj.width(),
-          nh = $obj.height();
+      var natW = $obj.naturalWidth(),
+        natH = $obj.naturalHeight();
+
+      var nw = natW,
+        nh = natH;
+
       if ((nw > w) && w > 0) {
         nw = w;
-        nh = (w / $obj.width()) * $obj.height();
+        nh = (w / natW) * natH;
       }
       if ((nh > h) && h > 0) {
         nh = h;
-        nw = (h / $obj.height()) * $obj.width();
+        nw = (h / natH) * natW;
       }
-      xscale = $obj.width() / nw;
-      yscale = $obj.height() / nh;
+      xscale = natW / nw;
+      yscale = natH / nh;
       $obj.width(nw).height(nh);
     }
     //}}}
     function unscale(c) //{{{
     {
       return {
-        x: c.x * xscale,
-        y: c.y * yscale,
-        x2: c.x2 * xscale,
-        y2: c.y2 * yscale,
-        w: c.w * xscale,
-        h: c.h * yscale
+        x: Math.floor(c.x * xscale),
+        y: Math.floor(c.y * yscale),
+        x2: Math.floor(c.x2 * xscale),
+        y2: Math.floor(c.y2 * yscale),
+        w: Math.floor(c.w * xscale),
+        h: Math.floor(c.h * yscale)
       };
     }
     //}}}
@@ -326,10 +330,10 @@
     presize($img, options.boxWidth, options.boxHeight);
 
     var boundx = $img.width(),
-        boundy = $img.height(),
+      boundy = $img.height(),
 
 
-        $div = $('<div />').width(boundx).height(boundy).addClass(cssClass('holder')).css({
+      $div = $('<div />').width(boundx).height(boundy).addClass(cssClass('holder')).css({
         position: 'relative',
         backgroundColor: options.bgColor
       }).insertAfter($origimg).append($img);
@@ -340,17 +344,17 @@
 
     var $img2 = $('<div />'),
 
-        $img_holder = $('<div />')
+      $img_holder = $('<div />')
         .width('100%').height('100%').css({
           zIndex: 310,
           position: 'absolute',
           overflow: 'hidden'
         }),
 
-        $hdl_holder = $('<div />')
+      $hdl_holder = $('<div />')
         .width('100%').height('100%').css('zIndex', 320),
 
-        $sel = $('<div />')
+      $sel = $('<div />')
         .css({
           position: 'absolute',
           zIndex: 600
@@ -362,9 +366,9 @@
     if (img_mode) {
 
       $img2 = $('<img />')
-          .attr('src', $img.attr('src')).css(img_css).width(boundx).height(boundy),
+        .attr('src', $img.attr('src')).css(img_css).width(boundx).height(boundy),
 
-      $img_holder.append($img2);
+        $img_holder.append($img2);
 
     }
 
@@ -385,9 +389,9 @@
     /* }}} */
     // Set more variables {{{
     var bgcolor = options.bgColor,
-        bgopacity = options.bgOpacity,
-        xlimit, ylimit, xmin, ymin, xscale, yscale, enabled = true,
-        btndown, animating, shift_down;
+      bgopacity = options.bgOpacity,
+      xlimit, ylimit, xmin, ymin, xscale, yscale, enabled = true,
+      btndown, animating, shift_down;
 
     docOffset = getPos($img);
     // }}}
@@ -399,7 +403,7 @@
       // from code by Jeffrey Sambells - http://github.com/iamamused/
       function hasTouchSupport() {
         var support = {}, events = ['touchstart', 'touchmove', 'touchend'],
-            el = document.createElement('div'), i;
+          el = document.createElement('div'), i;
 
         try {
           for(i=0; i<events.length; i++) {
@@ -421,7 +425,7 @@
 
       function detectSupport() {
         if ((options.touchSupport === true) || (options.touchSupport === false)) return options.touchSupport;
-          else return hasTouchSupport();
+        else return hasTouchSupport();
       }
       return {
         createDragger: function (ord) {
@@ -456,10 +460,10 @@
     // Coords Module {{{
     var Coords = (function () {
       var x1 = 0,
-          y1 = 0,
-          x2 = 0,
-          y2 = 0,
-          ox, oy;
+        y1 = 0,
+        x2 = 0,
+        y2 = 0,
+        ox, oy;
 
       function setPressed(pos) //{{{
       {
@@ -485,7 +489,7 @@
       function moveOffset(offset) //{{{
       {
         var ox = offset[0],
-            oy = offset[1];
+          oy = offset[1];
 
         if (0 > x1 + ox) {
           ox -= ox + x1;
@@ -511,14 +515,14 @@
       {
         var c = getFixed();
         switch (ord) {
-        case 'ne':
-          return [c.x2, c.y];
-        case 'nw':
-          return [c.x, c.y];
-        case 'se':
-          return [c.x2, c.y2];
-        case 'sw':
-          return [c.x, c.y2];
+          case 'ne':
+            return [c.x2, c.y];
+          case 'nw':
+            return [c.x, c.y];
+          case 'se':
+            return [c.x2, c.y2];
+          case 'sw':
+            return [c.x, c.y2];
         }
       }
       //}}}
@@ -529,18 +533,18 @@
         }
         // This function could use some optimization I think...
         var aspect = options.aspectRatio,
-            min_x = options.minSize[0] / xscale,
+          min_x = options.minSize[0] / xscale,
 
 
-            //min_y = options.minSize[1]/yscale,
-            max_x = options.maxSize[0] / xscale,
-            max_y = options.maxSize[1] / yscale,
-            rw = x2 - x1,
-            rh = y2 - y1,
-            rwa = Math.abs(rw),
-            rha = Math.abs(rh),
-            real_ratio = rwa / rha,
-            xx, yy, w, h;
+        //min_y = options.minSize[1]/yscale,
+          max_x = options.maxSize[0] / xscale,
+          max_y = options.maxSize[1] / yscale,
+          rw = x2 - x1,
+          rh = y2 - y1,
+          rwa = Math.abs(rw),
+          rha = Math.abs(rh),
+          real_ratio = rwa / rha,
+          xx, yy, w, h;
 
         if (max_x === 0) {
           max_x = boundx * 10;
@@ -635,9 +639,9 @@
       function flipCoords(x1, y1, x2, y2) //{{{
       {
         var xa = x1,
-            xb = x2,
-            ya = y1,
-            yb = y2;
+          xb = x2,
+          ya = y1,
+          yb = y2;
         if (x2 < x1) {
           xa = x2;
           xb = x1;
@@ -652,8 +656,8 @@
       function getRect() //{{{
       {
         var xsize = x2 - x1,
-            ysize = y2 - y1,
-            delta;
+          ysize = y2 - y1,
+          delta;
 
         if (xlimit && (Math.abs(xsize) > xlimit)) {
           x2 = (xsize > 0) ? (x1 + xlimit) : (x1 - xlimit);
@@ -737,17 +741,17 @@
     // Shade Module {{{
     var Shade = (function() {
       var enabled = false,
-          holder = $('<div />').css({
-            position: 'absolute',
-            zIndex: 240,
-            opacity: 0
-          }),
-          shades = {
-            top: createShade(),
-            left: createShade().height(boundy),
-            right: createShade().height(boundy),
-            bottom: createShade()
-          };
+        holder = $('<div />').css({
+          position: 'absolute',
+          zIndex: 240,
+          opacity: 0
+        }),
+        shades = {
+          top: createShade(),
+          left: createShade().height(boundy),
+          right: createShade().height(boundy),
+          bottom: createShade()
+        };
 
       function resizeShades(w,h) {
         shades.left.css({ height: px(h) });
@@ -797,7 +801,7 @@
           {
             setOpacity(options.bgOpacity,1);
           }
-            else setOpacity(1,1);
+          else setOpacity(1,1);
         }
       }
       function setBgColor(color,now) {
@@ -854,11 +858,11 @@
     // Selection Module {{{
     var Selection = (function () {
       var awake,
-          hdep = 370,
-          borders = {},
-          handle = {},
-          dragbar = {},
-          seehandles = false;
+        hdep = 370,
+        borders = {},
+        handle = {},
+        dragbar = {},
+        seehandles = false;
 
       // Private Methods
       function insertBorder(type) //{{{
@@ -1010,7 +1014,7 @@
         $sel.show();
 
         if (options.shade) Shade.opacity(bgopacity);
-          else setBgOpacity(bgopacity,true);
+        else setBgOpacity(bgopacity,true);
 
         awake = true;
       }
@@ -1021,7 +1025,7 @@
         $sel.hide();
 
         if (options.shade) Shade.opacity(1);
-          else setBgOpacity(1);
+        else setBgOpacity(1);
 
         awake = false;
         options.onRelease.call(api);
@@ -1125,8 +1129,8 @@
     // Tracker Module {{{
     var Tracker = (function () {
       var onMove = function () {},
-          onDone = function () {},
-          trackDoc = options.trackDocument;
+        onDone = function () {},
+        trackDoc = options.trackDocument;
 
       function toFront(touch) //{{{
       {
@@ -1221,10 +1225,10 @@
     // KeyManager Module {{{
     var KeyManager = (function () {
       var $keymgr = $('<input type="radio" />').css({
-        position: 'fixed',
-        left: '-120px',
-        width: '12px'
-      }).addClass('jcrop-keymgr'),
+          position: 'fixed',
+          left: '-120px',
+          width: '12px'
+        }).addClass('jcrop-keymgr'),
 
         $keywrap = $('<div />').css({
           position: 'absolute',
@@ -1263,23 +1267,23 @@
         var nudge = shift_down ? 10 : 1;
 
         switch (e.keyCode) {
-        case 37:
-          doNudge(e, -nudge, 0);
-          break;
-        case 39:
-          doNudge(e, nudge, 0);
-          break;
-        case 38:
-          doNudge(e, 0, -nudge);
-          break;
-        case 40:
-          doNudge(e, 0, nudge);
-          break;
-        case 27:
-          if (options.allowSelect) Selection.release();
-          break;
-        case 9:
-          return true;
+          case 37:
+            doNudge(e, -nudge, 0);
+            break;
+          case 39:
+            doNudge(e, nudge, 0);
+            break;
+          case 38:
+            doNudge(e, 0, -nudge);
+            break;
+          case 40:
+            doNudge(e, 0, nudge);
+            break;
+          case 27:
+            if (options.allowSelect) Selection.release();
+            break;
+          case 9:
+            return true;
         }
 
         return false;
@@ -1315,25 +1319,25 @@
     function animateTo(a, callback) //{{{
     {
       var x1 = a[0] / xscale,
-          y1 = a[1] / yscale,
-          x2 = a[2] / xscale,
-          y2 = a[3] / yscale;
+        y1 = a[1] / yscale,
+        x2 = a[2] / xscale,
+        y2 = a[3] / yscale;
 
       if (animating) {
         return;
       }
 
       var animto = Coords.flipCoords(x1, y1, x2, y2),
-          c = Coords.getFixed(),
-          initcr = [c.x, c.y, c.x2, c.y2],
-          animat = initcr,
-          interv = options.animationDelay,
-          ix1 = animto[0] - initcr[0],
-          iy1 = animto[1] - initcr[1],
-          ix2 = animto[2] - initcr[2],
-          iy2 = animto[3] - initcr[3],
-          pcent = 0,
-          velocity = options.swingSpeed;
+        c = Coords.getFixed(),
+        initcr = [c.x, c.y, c.x2, c.y2],
+        animat = initcr,
+        interv = options.animationDelay,
+        ix1 = animto[0] - initcr[0],
+        iy1 = animto[1] - initcr[1],
+        ix2 = animto[2] - initcr[2],
+        iy2 = animto[3] - initcr[3],
+        pcent = 0,
+        velocity = options.swingSpeed;
 
       x1 = animat[0];
       y1 = animat[1];
@@ -1516,7 +1520,7 @@
       if (bgopacity != options.bgOpacity) {
         bgopacity = options.bgOpacity;
         if (options.shade) Shade.refresh();
-          else Selection.setBgOpacity(bgopacity);
+        else Selection.setBgOpacity(bgopacity);
       }
 
       xlimit = options.maxSize[0] || 0;
@@ -1581,6 +1585,25 @@
     $origimg.data('Jcrop', api);
     return api;
   };
+
+  // jQuery.naturalWidth / jQuery.naturalHeight plugin for (already-loaded) images
+  // Triple-licensed: Public Domain, MIT and WTFPL license - share and enjoy!
+  (function($) {
+    function img(url) {
+      var i = new Image;
+      i.src = url;
+      return i;
+    }
+
+    if ('naturalWidth' in (new Image)) {
+      $.fn.naturalWidth  = function() { return this[0].naturalWidth; };
+      $.fn.naturalHeight = function() { return this[0].naturalHeight; };
+      return;
+    }
+    $.fn.naturalWidth  = function() { return img(this.src).width; };
+    $.fn.naturalHeight = function() { return img(this.src).height; };
+  })(jQuery);
+
   $.fn.Jcrop = function (options, callback) //{{{
   {
     var api;
